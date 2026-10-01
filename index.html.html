@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f7f9">
+  <title>달서구 공공교육 모바일 지원센터</title>
+  <style>
+    :root {
+      --ink: #172b3a;
+      --sub: #556c7d;
+      --blue: #1668aa;
+      --blue-dark: #0f4d80;
+      --line: #dfe7ec;
+      --bg: #eef3f6;
+      --red: #e54b38;
+      font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color: var(--ink);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #dbe4e9;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #f0a342;
+      outline-offset: 2px;
+    }
+    .app {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100svh;
+      margin: auto;
+      background: #fff;
+      box-shadow: 0 0 45px rgba(24, 48, 61, 0.22);
+      display: flex;
+      flex-direction: column;
+    }
+    .govtop {
+      height: 36px;
+      background: #f2f5f7;
+      border-bottom: 1px solid #dfe5e8;
+      padding: 9px 18px;
+      color: #556672;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .govtop::before {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 10px;
+      background: linear-gradient(to bottom, #cd2e3a 50%, #0047a0 50%);
+      border-radius: 2px;
+    }
+    .head {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+    }
+    .logo {
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+    .logo span {
+      color: var(--blue);
+    }
+    .menu {
+      font-size: 20px;
+      color: #50616b;
+    }
+    .page {
+      padding: 24px 20px 40px;
+      flex: 1;
+    }
+    .screen {
+      animation: fadeIn .35s ease both;
+    }
+    .screen[hidden] {
+      display: none;
+    }
+    .crumb {
+      font-size: 12px;
+      color: #7b8c96;
+      margin: 0 0 10px;
+    }
+    .title {
+      font-size: 28px;
+      line-height: 1.32;
+      letter-spacing: -0.05em;
+      margin: 0 0 8px;
+      word-break: keep-all;
+    }
+    .desc {
+      color: #556c7d;
+      font-size: 14.5px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+      word-break: keep-all;
+    }
+    .progress {
+      height: 4px;
+      background: #e4ebee;
+      border-radius: 9px;
+      overflow: hidden;
+      margin: 0 0 20px;
+    }
+    .progress span {
+      display: block;
+      height: 100%;
+      background: var(--blue);
+      transition: width .4s ease;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+      background: #fff;
+      margin: 14px 0;
+      box-shadow: 0 4px 18px rgba(22, 53, 76, 0.04);
+    }
+    .notice {
+      background: #f4f8fc;
+      border: 1px solid #d4e5f2;
+      border-radius: 9px;
+      padding: 14px;
+      font-size: 13px;
+      color: #3b586d;
+      line-height: 1.6;
+      word-break: keep-all;
+      margin-bottom: 16px;
+    }
+    .notice b {
+      color: var(--blue-dark);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .label {
+      display: block;
+      font-weight: 800;
+      font-size: 14px;
+      margin: 16px 0 7px;
+      color: #223746;
+    }
+    .label small {
+      font-weight: normal;
+      color: #758692;
+      font-size: 12px;
+      margin-left: 4px;
+    }
+    .inp {
+      width: 100%;
+      height: 52px;
+      border: 1px solid #bccbd4;
+      border-radius: 8px;
+      padding: 0 14px;
+      font-size: 16px;
+      color: #192f40;
+      background: #fff;
+      transition: border-color .2s;
+    }
+    .inp:focus {
+      border-color: var(--blue);
+    }
+    .inp::placeholder {
+      color: #a4b3be;
+      font-size: 15px;
+    }
+    .hint {
+      font-size: 12px;
+      color: #6d7e88;
+      line-height: 1.55;
+      margin: 7px 0 0;
+      word-break: keep-all;
+    }
+    .btn {
+      height: 54px;
+      border: 0;
+      border-radius: 8px;
+      width: 100%;
+      font-weight: 800;
+      font-size: 16px;
+      margin-top: 10px;
+      background: var(--blue);
+      color: white;
+      text-align: center;
+      transition: background .2s, transform .1s;
+    }
+    .btn:active {
+      transform: scale(0.99);
+      background: var(--blue-dark);
+    }
+    .btn.outline {
+      background: #fff;
+      border: 1px solid #c2d6e4;
+      color: #2b5472;
+    }
+    .btn.dark {
+      background: #14222d;
+      color: #fff;
+    }
+    .check {
+      display: flex;
+      gap: 9px;
+      margin: 18px 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #4e6370;
+      align-items: flex-start;
+    }
+    .check input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--blue);
+    }
+    .row-2 {
+      display: flex;
+      gap: 10px;
+    }
+    .row-2 > div {
+      flex: 1;
+    }
+
+    /* 해커 터미널 모드 */
+    .hack-wrap {
+      background: #081119;
+      color: #c9f5db;
+      min-height: 100svh;
+      margin: -24px -20px -40px;
+      padding: 28px 20px 40px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      position: relative;
+      overflow: hidden;
+    }
+    .glitch {
+      display: inline-block;
+      color: #ff5544;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      animation: pulse 1.2s infinite alternate;
+    }
+    .hack-title {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 26px;
+      line-height: 1.35;
+      color: #fff;
+      margin: 10px 0 16px;
+      letter-spacing: -0.04em;
+      word-break: keep-all;
+    }
+    .terminal {
+      background: #0d1a24;
+      border: 1px solid #1f3b4d;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.85;
+      margin: 18px 0;
+    }
+    .term-line {
+      opacity: 0;
+      transform: translateY(6px);
+      animation: termFade .3s ease forwards;
+    }
+    .term-line.cyan { color: #5eead4; }
+    .term-line.yellow { color: #fde047; }
+    .term-line.red { color: #f87171; font-weight: bold; }
+    .term-line:nth-child(1) { animation-delay: .2s; }
+    .term-line:nth-child(2) { animation-delay: .8s; }
+    .term-line:nth-child(3) { animation-delay: 1.4s; }
+    .term-line:nth-child(4) { animation-delay: 2.0s; }
+    .term-line:nth-child(5) { animation-delay: 2.6s; }
+
+    .stolen-box {
+      opacity: 0;
+      animation: termFade .4s 3.2s forwards;
+      border: 1.5px solid #ef4444;
+      background: #200f13;
+      border-radius: 10px;
+      padding: 18px;
+      margin: 18px 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .stolen-box h3 {
+      margin: 0 0 12px;
+      color: #ff8577;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+    .stolen-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px dashed #401e23;
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+    .stolen-item:last-child { border-bottom: 0; }
+    .stolen-item b {
+      color: #fff;
+      font-weight: 700;
+    }
+    .next-btn {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #e54b38;
+      color: #fff;
+      border: 0;
+      border-radius: 8px;
+      height: 54px;
+      width: 100%;
+      font-weight: 800;
+      font-size: 16px;
+      margin-top: 14px;
+      display: none;
+    }
+
+    /* 최종 교육 결과 화면 */
+    .badge {
+      display: inline-block;
+      background: #e6f3fa;
+      color: var(--blue-dark);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .alert-banner {
+      background: #fef2f2;
+      border: 1px solid #fee2e2;
+      border-radius: 10px;
+      padding: 16px;
+      color: #991b1b;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+      word-break: keep-all;
+    }
+    .alert-banner b {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .step-list {
+      margin: 16px 0;
+      padding: 0;
+      list-style: none;
+    }
+    .step-item {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 18px;
+    }
+    .step-item::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+    .step-item::after {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 18px;
+      bottom: -14px;
+      width: 2px;
+      background: #dce5ea;
+    }
+    .step-item:last-child::after { display: none; }
+    .step-item h4 {
+      margin: 0 0 5px;
+      font-size: 16px;
+      color: #1a2f3f;
+    }
+    .step-item p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #556c7d;
+      word-break: keep-all;
+    }
+    .law-box {
+      background: #f8fafb;
+      border-left: 4px solid var(--blue);
+      padding: 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #334d5e;
+      margin: 16px 0;
+    }
+    .law-box b { color: #112d42; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes termFade {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="govtop">대한민국 공식 전자정부 서비스</div>
+    <header class="head">
+      <div class="logo"><span>달서구</span> 교육지원포털</div>
+      <div class="menu">☰</div>
+    </header>
+
+    <main class="page">
+      <!-- 1단계: 교육 등록 및 기본 확인 -->
+      <section class="screen" id="step1">
+        <p class="crumb">교육연수지원 〉 상시학습 〉 출석확인</p>
+        <div class="progress"><span style="width: 33%"></span></div>
+        <h1 class="title">교육 참여 확인 및<br>교재 다운로드</h1>
+        <p class="desc">오늘 진행되는 개인정보보호 교육 출석 인정과 강의 교안(PDF) 수령을 위해 등록 정보를 확인합니다.</p>
+
+        <div class="card">
+          <div class="notice">
+            <b>상시학습 시간 인정 안내</b>
+            성명 및 연락처를 정확히 등록하셔야 교육 이수 처리와 상시학습 시간(1시간)이 자동 연계됩니다.
+          </div>
+
+          <label class="label" for="u_dept">소속 부서 / 직급</label>
+          <input id="u_dept" class="inp" placeholder="예: 기획조정실 / 주무관" autocomplete="off">
+
+          <label class="label" for="u_name">성명</label>
+          <input id="u_name" class="inp" placeholder="성명을 입력하세요" autocomplete="name">
+
+          <label class="label" for="u_phone">휴대전화 번호</label>
+          <input id="u_phone" class="inp" type="tel" inputmode="tel" maxlength="13" placeholder="010-0000-0000" autocomplete="tel">
+          <p class="hint">교재 다운로드 URL이 모바일 알림톡으로 전송됩니다.</p>
+
+          <label class="check">
+            <input id="u_agree" type="checkbox" checked>
+            <span>상시학습 이수 관리 및 교재 전송을 위한 개인정보 처리에 동의합니다.</span>
+          </label>
+
+          <button id="btn_step1" class="btn">다음 단계 (교재 수령 확인)</button>
+        </div>
+      </section>
+
+      <!-- 2단계: 교묘하게 추가 개인정보 요구 (문자 인증 대신 암호화 비번 & 생년월일 유도) -->
+      <section class="screen" id="step2" hidden>
+        <p class="crumb">교육연수지원 〉 교재 다운로드 〉 보안 설정</p>
+        <div class="progress"><span style="width: 66%"></span></div>
+        <h1 class="title">교재 암호화 및<br>본인 식별 확인</h1>
+        <p class="desc"><span id="txt_target_name" style="color:var(--blue); font-weight:bold;">교육생</span>님의 직무자료 보호를 위해 교재 PDF에 열람 비밀번호가 자동 설정됩니다.</p>
+
+        <div class="card">
+          <div class="notice">
+            <b>보안 문서 열람 비밀번호 설정 안내</b>
+            공공기관 보안 정책에 따라 배포 교재는 암호화됩니다. 본인이 기억하기 쉬운 <b>숫자 4자리 또는 문자</b>를 입력하시면 해당 암호로 문서가 잠금 생성됩니다.
+          </div>
+
+          <label class="label" for="u_birth">생년월일 6자리 <small>(공무원 연수 본인 대조용)</small></label>
+          <input id="u_birth" class="inp" type="tel" inputmode="numeric" maxlength="6" placeholder="예: 880521">
+          <p class="hint">인사행정 시스템과 이수자 명단 대조에 사용됩니다.</p>
+
+          <label class="label" for="u_pwd">교재 열람용 비밀번호 <small>(자주 쓰는 4~6자리 권장)</small></label>
+          <input id="u_pwd" class="inp" type="password" maxlength="8" placeholder="문서 잠금용 비밀번호 입력">
+          <p class="hint">※ 타인이 열람하지 못하도록 평소 자주 사용하는 번호로 설정해 주세요.</p>
+
+          <button id="btn_step2" class="btn">보안 교재 즉시 발급받기</button>
+          <button id="btn_exit" class="btn outline">취소하고 나가기</button>
+        </div>
+      </section>
+
+      <!-- 3단계: 해커의 데이터베이스 가상 탈취 모션 (화면 반전) -->
+      <section class="screen" id="step_hack" hidden>
+        <div class="hack-wrap">
+          <span class="glitch">● TARGET DATA HARVESTED</span>
+          <h2 class="hack-title">방금 입력하신 정보가<br>실시간으로 수집되었습니다.</h2>
+
+          <div class="terminal">
+            <div class="term-line cyan">&gt; Target session hooked: dalseo-edu-portal</div>
+            <div class="term-line yellow">&gt; Infiltrating: identity matching... success</div>
+            <div class="term-line">&gt; Extracting credentials: name, phone, birth, pass</div>
+            <div class="term-line red">&gt; Combining identity profile for credential stuffing</div>
+            <div class="term-line cyan">&gt; Status: READY FOR TARGETED ATTACK</div>
+          </div>
+
+          <div class="stolen-box">
+            <h3>[탈취된 프로필 카드 (가상)]</h3>
+            <div class="stolen-item"><span>소속/직급:</span><b id="h_dept"></b></div>
+            <div class="stolen-item"><span>성명:</span><b id="h_name"></b></div>
+            <div class="stolen-item"><span>휴대전화:</span><b id="h_phone"></b></div>
+            <div class="stolen-item"><span>생년월일:</span><b id="h_birth"></b></div>
+            <div class="stolen-item"><span>설정한 비밀번호:</span><b id="h_pwd" style="color:#ff5544;"></b></div>
+          </div>
+
+          <button id="btn_to_result" class="next-btn">왜 위험한지 확인하기 (교육 해설)</button>
+        </div>
+      </section>
+
+      <!-- 4단계: 위험성 분석 & 안심 & 공무원 실무 연결 -->
+      <section class="screen" id="step_result" hidden>
+        <p class="crumb">교육연수 〉 개인정보 체험 〉 위험 분석</p>
+        <div class="progress"><span style="width: 100%"></span></div>
+        <span class="badge">모의 피싱 체험 종료</span>
+        <h1 class="title">놀라셨죠?<br>이것이 실제 해커의 수법입니다.</h1>
+
+        <div class="alert-banner">
+          <b>※ 안심하세요! 실제 정보는 전송되지 않았습니다.</b>
+          본 화면은 교육용 가상 시뮬레이션입니다. 방금 입력하신 정보는 외부 서버로 전송되지 않았으며, 브라우저를 닫는 즉시 완전히 삭제됩니다.
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0; font-size:18px; color:#1a2f3f;">왜 우리는 무심코 입력했을까요?</h3>
+          <ul class="step-list">
+            <li class="step-item">
+              <h4>1. 믿을 수밖에 없는 '명분' (상시학습, 교육자료)</h4>
+              <p>공무원들이 거부감 없이 받아들이는 '출석 인정', '공식 교재 다운로드'라는 익숙한 업무 환경을 흉내 내어 경계심을 완전히 무너뜨렸습니다.</p>
+            </li>
+            <li class="step-item">
+              <h4>2. 교묘하게 요구한 '열람 비밀번호 & 생년월일'</h4>
+              <p>인증번호 대신 "교재를 암호화해 주겠다", "본인 확인용이다"라며 입력하게 만든 <b>생년월일과 자주 쓰는 비밀번호</b>는 해커들이 가장 노리는 핵심 정보입니다.</p>
+            </li>
+            <li class="step-item">
+              <h4>3. 크리덴셜 스터핑(Credential Stuffing)과 표적 공격</h4>
+              <p>사람들은 포털, 업무망, 금융앱 등에서 <b>동일하거나 유사한 비밀번호</b>를 재사용합니다. 해커는 여기서 얻은 이름·연락처·생년월일·비밀번호 조합으로 다른 내부 시스템과 메일 계정 로그인을 무차별 시도합니다.</p>
+            </li>
+          </ul>
+        </div>
+
+        <button id="btn_restart" class="btn dark">처음부터 다시 체험하기</button>
+      </section>
+    </main>
+
+    <footer style="background:#f8fafb; border-top:1px solid var(--line); padding:16px 20px; font-size:11.5px; color:#788b96; line-height:1.6;">
+      본 콘텐츠는 커리어인(Career In) 교육용 모의 시뮬레이션 웹앱입니다. 외부 전송 및 DB 저장 기능이 일체 없습니다.
+    </footer>
+  </div>
+
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    let userData = { dept: '', name: '', phone: '', birth: '', pwd: '' };
+
+    function showScreen(screenId) {
+      ['step1', 'step2', 'step_hack', 'step_result'].forEach(id => {
+        $(id).hidden = (id !== screenId);
+      });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // 1단계 -> 2단계
+    $('btn_step1').onclick = () => {
+      const dept = $('u_dept').value.trim();
+      const name = $('u_name').value.trim();
+      const phone = $('u_phone').value.trim();
+
+      if (!name || !phone) {
+        alert('성명과 휴대전화 번호를 입력해 주세요.');
+        return;
+      }
+      if (!$('u_agree').checked) {
+        alert('개인정보 수집·이용 동의에 체크해 주세요.');
+        return;
+      }
+
+      userData.dept = dept || '달서구청';
+      userData.name = name;
+      userData.phone = phone;
+
+      $('txt_target_name').textContent = `${name} 주무관`;
+      showScreen('step2');
+    };
+
+    // 2단계 -> 3단계 (해킹 반전 연출)
+    $('btn_step2').onclick = () => {
+      const birth = $('u_birth').value.trim();
+      const pwd = $('u_pwd').value.trim();
+
+      if (!birth || !pwd) {
+        alert('본인 대조용 생년월일과 교재 열람 비밀번호를 입력해 주세요.');
+        return;
+      }
+
+      userData.birth = birth;
+      userData.pwd = pwd;
+
+      // 해커 화면에 데이터 주입
+      $('h_dept').textContent = userData.dept;
+      $('h_name').textContent = userData.name;
+      $('h_phone').textContent = userData.phone;
+      $('h_birth').textContent = userData.birth;
+      $('h_pwd').textContent = userData.pwd;
+
+      showScreen('step_hack');
+
+      // 3.5초 후 결과 버튼 표시
+      setTimeout(() => {
+        $('btn_to_result').style.display = 'block';
+      }, 3500);
+    };
+
+    // 취소 버튼
+    $('btn_exit').onclick = () => {
+      alert('체험이 취소되었습니다.');
+      location.reload();
+    };
+
+    // 3단계 -> 4단계 (결과 및 해설)
+    $('btn_to_result').onclick = () => {
+      showScreen('step_result');
+    };
+
+    // 다시 시작
+    $('btn_restart').onclick = () => {
+      userData = { dept: '', name: '', phone: '', birth: '', pwd: '' };
+      $('u_dept').value = '';
+      $('u_name').value = '';
+      $('u_phone').value = '';
+      $('u_birth').value = '';
+      $('u_pwd').value = '';
+      $('btn_to_result').style.display = 'none';
+      showScreen('step1');
+    };
+  </script>
+</body>
+</html>
