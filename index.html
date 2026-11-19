@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f4f7f9">
-  <title>달서구 공공교육 모바일 지원센터</title>
+  <title>공공교육 모바일 지원센터</title>
   <style>
     :root {
       --ink: #172b3a;
@@ -425,7 +425,7 @@
   <div class="app">
     <div class="govtop">대한민국 공식 전자정부 서비스</div>
     <header class="head">
-      <div class="logo"><span>달서구</span> 교육지원포털</div>
+      <div class="logo"><span></span> 교육지원포털</div>
       <div class="menu">☰</div>
     </header>
 
@@ -475,9 +475,9 @@
             공공기관 보안 정책에 따라 배포 교재는 암호화됩니다. 본인이 기억하기 쉬운 <b>숫자 4자리 또는 문자</b>를 입력하시면 해당 암호로 문서가 잠금 생성됩니다.
           </div>
 
-          <label class="label" for="u_birth">생년월일 6자리 <small>(공무원 연수 본인 대조용)</small></label>
+          <label class="label" for="u_birth">생년월일 6자리 <small>( 연수 본인 대조용)</small></label>
           <input id="u_birth" class="inp" type="tel" inputmode="numeric" maxlength="6" placeholder="예: 880521">
-          <p class="hint">인사행정 시스템과 이수자 명단 대조에 사용됩니다.</p>
+          <p class="hint">행정 시스템과 이수자 명단 대조에 사용됩니다.</p>
 
           <label class="label" for="u_pwd">교재 열람용 비밀번호 <small>(자주 쓰는 4~6자리 권장)</small></label>
           <input id="u_pwd" class="inp" type="password" maxlength="8" placeholder="문서 잠금용 비밀번호 입력">
@@ -515,7 +515,7 @@
         </div>
       </section>
 
-      <!-- 4단계: 위험성 분석 & 안심 & 공무원 실무 연결 -->
+      <!-- 4단계: 위험성 분석 & 안심 & 실무 연결 -->
       <section class="screen" id="step_result" hidden>
         <p class="crumb">교육연수 〉 개인정보 체험 〉 위험 분석</p>
         <div class="progress"><span style="width: 100%"></span></div>
@@ -532,7 +532,7 @@
           <ul class="step-list">
             <li class="step-item">
               <h4>1. 믿을 수밖에 없는 '명분' (상시학습, 교육자료)</h4>
-              <p>공무원들이 거부감 없이 받아들이는 '출석 인정', '공식 교재 다운로드'라는 익숙한 업무 환경을 흉내 내어 경계심을 완전히 무너뜨렸습니다.</p>
+              <p>교육생들이 거부감 없이 받아들이는 '출석 인정', '공식 교재 다운로드'라는 익숙한 업무 환경을 흉내 내어 경계심을 완전히 무너뜨렸습니다.</p>
             </li>
             <li class="step-item">
               <h4>2. 교묘하게 요구한 '열람 비밀번호 & 생년월일'</h4>
@@ -581,11 +581,11 @@
         return;
       }
 
-      userData.dept = dept || '달서구청';
+      userData.dept = dept || '(주)한국기업';
       userData.name = name;
       userData.phone = phone;
 
-      $('txt_target_name').textContent = `${name} 주무관`;
+      $('txt_target_name').textContent = `${name} 주임`;
       showScreen('step2');
     };
 
